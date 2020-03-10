@@ -81,9 +81,7 @@ module.exports = app => {
         nourriture: null,
         amis: []
       })
-      res.cookie('session',session)
-      res.cookie('username',username)
-      return res.status(201).json({});
+      return res.status(201).json({username:username,session:session});
     }
     return res.sendStatus(400);
   });
