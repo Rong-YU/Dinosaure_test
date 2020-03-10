@@ -15,14 +15,14 @@ module.exports = app => {
             return next();
         }
 
-        console.log(req.cookies.session)
-        if (req.cookies.session) {
+        console.log(req.body.session)
+        if (req.body.session) {
           let user;
           if (user) {
               req.user = user;
               return next();
           }
-          let sessionKey = req.cookies.session
+          let sessionKey = req.body.session
           user = await users.findOne({
               sessionKey
           });
@@ -51,9 +51,7 @@ module.exports = app => {
           .update(seed)
           .digest("hex");
         await users.findOneAndUpdate({username},{sessionKey:session})
-        res.cookie('session',session)
-        res.cookie('username',username)
-        return res.status(201).json({});
+        return res.status(201).json({username:username,session:session});
       }
       return res.sendStatus(403);
     }

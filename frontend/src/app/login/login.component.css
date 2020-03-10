@@ -1,0 +1,23 @@
+h2{
+    margin: 50px auto;
+    text-align: center;
+}
+
+.login{
+    width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border:1px solid #eee;
+
+    
+}
+
+.login li{
+    
+    height: 50px;
+
+}
+
+button{
+    margin:10px;
+}

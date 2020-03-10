@@ -1,0 +1,19 @@
+h2{
+    margin: 50px auto;
+    text-align: center;
+}
+
+.information{
+    width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border:1px solid #eee;
+
+    
+}
+
+.information li{
+    
+    height: 50px;
+
+}
