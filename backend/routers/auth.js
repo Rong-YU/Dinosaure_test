@@ -7,7 +7,8 @@ module.exports = app => {
     const crypto = require("crypto");
     
     app.use(async (req, res, next) => {
-        console.log(req.body)
+        req.header("Access-Control-Allow-Origin", "*");
+        req.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Authorization, Content-Type, Accept");
         if (req.originalUrl.startsWith("/api/sessions") && req.method === "POST") {
         return next();
         }
@@ -15,14 +16,8 @@ module.exports = app => {
             return next();
         }
 
-        console.log(req.body.session)
-        if (req.body.session) {
-          let user;
-          if (user) {
-              req.user = user;
-              return next();
-          }
-          let sessionKey = req.body.session
+        if (req.headers.authorization) {
+          let sessionKey = req.headers.authorization
           user = await users.findOne({
               sessionKey
           });

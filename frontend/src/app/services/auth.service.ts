@@ -18,12 +18,18 @@ export class AuthService {
   constructor(private http:HttpClient) { }
 
   register(user: User) {
-    const res = this.http.post<User>(this.registerUrl, user, httpOptions)
-    return res;
+    return this.http.post<User>(this.registerUrl, user, httpOptions)
   }
   login(user: User):Observable<User>{
-    const res = this.http.post<User>(this.loginUrl, user, httpOptions)
-    return res;
+    return this.http.post<User>(this.loginUrl, user, httpOptions)
+  }
+
+  logout(){
+    localStorage.removeItem('session')
+  }
+
+  getToken(){
+    return localStorage.getItem('session')
   }
 
 }

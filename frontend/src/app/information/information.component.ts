@@ -9,21 +9,35 @@ import { InformationService } from "../services/information.service";
 })
 export class InformationComponent implements OnInit {
 
-  public dinosaure:Dinosaure={
-    age: 3,
-    famille: "hez",
-    race: "ccc",
-    nourriture: "frites",
-    amis: [],
+  dinosaure: Dinosaure={
+    age:0,
+    race:"aa",
+    famille:"zzz",
+    nourriture:"zzz",
+    amis:[]
   }
-
-
   constructor(public information:InformationService) { 
   }
 
   ngOnInit(): void {
+      this.getInformation();
   }
 
+  getInformation(){
+    const res = this.information.getInformation()
+    res.subscribe((dinosaure : Dinosaure) =>{
+        this.dinosaure = dinosaure
+    },(error:any)=>{
+      console.log("error")
+    });
+  }
+
+  setInformation(){
+    const res = this.information.setInformation(this.dinosaure)
+    res.subscribe((error:any)=>{
+    console.log("error")
+  });
+  }
   doSubmit(): void{
 
   }

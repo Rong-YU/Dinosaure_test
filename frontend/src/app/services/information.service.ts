@@ -1,33 +1,32 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from "./auth.service";
-import { User } from "../models/User"
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { User } from '../models/User';
+import { Observable } from 'rxjs';
 import { Dinosaure } from "../models/Dinosaure"
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+  })
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class InformationService {
-  constructor(public auth:AuthService) { }
+  url:string = "http://localhost:3000/api/"
+  constructor(private http:HttpClient) { }
   
-  session(user: User){
-    const res = this.auth.login(user)
-    res.subscribe((user : User) =>{
-        localStorage.setItem('username',user.username);
-        localStorage.setItem('session',user.session);
-    },(error:any)=>{
-      localStorage.removeItem('session');
-    });
+  getInformation(){
+    const res = this.http.get<Dinosaure>(this.url + "information", httpOptions)
+    return res;
   }
-  logout(){
-    localStorage.removeItem('session')
+
+  setInformation(dinosaure: Dinosaure):Observable<Dinosaure>{
+    console.log("aaa")
+    const res = this.http.post<User>("http://localhost:3000/api/sessions/", {username:"panda",password:"aaa"}, httpOptions)
+    return this.http.put<Dinosaure>(this.url + "information", dinosaure, httpOptions)
   }
-  register(user: User){
-    const res = this.auth.register(user)
-    res.subscribe((user : User) =>{
-        localStorage.setItem('username',user.username);
-        localStorage.setItem('session',user.session);
-    },(error:any)=>{
-      localStorage.removeItem('session');
-    });
-  }
+
 }

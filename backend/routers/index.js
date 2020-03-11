@@ -4,13 +4,16 @@ module.exports = app => {
     const User = require('../models/User')
 
     //(Afficher/Modifier) ses informations (age / famille / race / nourriture) 
-    app.get('/api/dinosaures',async(req,res) => {
-        const items = await Dinosaure.find().where('user').equals(req.user).populate('amis')
+    app.get('/api/information',async(req,res) => {
+        //const items = await Dinosaure.find().where('user').equals(req.user).populate('amis')
+        const items = await Dinosaure.findOne({"user": req.user})
         res.send(items)
     })
 
-    app.put('/api/dinosaures',async(req,res) => {
-        const model = await Dinosaure.find().where('user').equals(req.user).update({
+    app.put('/api/information',async(req,res) => {
+        console.log(req.body)
+        console.log(req.user)
+        const model = await Dinosaure.findOne({"user": req.user}).update({
             age: req.body.age,
             famille: req.body.famille,
             race: req.body.race,

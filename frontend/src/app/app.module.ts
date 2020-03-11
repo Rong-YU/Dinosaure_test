@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -11,6 +11,7 @@ import { InformationComponent } from './information/information.component';
 
 import { InformationService } from "./services/information.service";
 import { AuthService } from "./services/auth.service";
+import { TokenInterceptorService } from "./services/token-interceptor.service";
 
 @NgModule({
   declarations: [
@@ -25,7 +26,11 @@ import { AuthService } from "./services/auth.service";
     HttpClientModule,
     FormsModule,
   ],
-  providers: [AuthService,InformationService],
+  providers: [AuthService,InformationService,{
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
