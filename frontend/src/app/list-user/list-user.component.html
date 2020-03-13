@@ -1,5 +1,5 @@
-<h2>List ami</h2>
-<div class="listAmi">
+<h2>List dinosaures</h2>
+<div class="listDinosaures">
 
     <div *ngFor="let dinosaure of dinosaures">
         <div class="name" (click)="onSelect(dinosaure)">
@@ -10,7 +10,7 @@
             <li>Famille: {{dinosaure.famille}}</li>
             <li>Nourriture: {{dinosaure.nourriture}}</li>
             <li>Race: {{dinosaure.race}}</li>
-            <li><button (click)="deleteFriend(dinosaure._id)" class="add">Delete Friend</button></li>
+            <li><button (click)="addFriend(dinosaure._id)" class="add">Add Friend</button></li>
         </ul>
     </div>
 

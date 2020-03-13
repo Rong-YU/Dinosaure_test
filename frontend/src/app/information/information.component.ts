@@ -10,10 +10,11 @@ import { InformationService } from "../services/information.service";
 export class InformationComponent implements OnInit {
 
   dinosaure: Dinosaure={
-    age:0,
-    race:"aa",
-    famille:"zzz",
-    nourriture:"zzz",
+    name:"",
+    age:null,
+    race:"",
+    famille:"",
+    nourriture:"",
     amis:[]
   }
   constructor(public information:InformationService) { 
@@ -35,11 +36,8 @@ export class InformationComponent implements OnInit {
   setInformation(){
     const res = this.information.setInformation(this.dinosaure)
     res.subscribe((error:any)=>{
-    console.log("error")
+    console.log(error)
   });
-  }
-  doSubmit(): void{
-
   }
 
 }

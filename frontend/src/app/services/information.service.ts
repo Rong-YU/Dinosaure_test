@@ -19,14 +19,23 @@ export class InformationService {
   constructor(private http:HttpClient) { }
   
   getInformation(){
-    const res = this.http.get<Dinosaure>(this.url + "information", httpOptions)
-    return res;
+    return this.http.get<Dinosaure>(this.url + "information", httpOptions)
   }
 
   setInformation(dinosaure: Dinosaure):Observable<Dinosaure>{
-    console.log("aaa")
-    const res = this.http.post<User>("http://localhost:3000/api/sessions/", {username:"panda",password:"aaa"}, httpOptions)
     return this.http.put<Dinosaure>(this.url + "information", dinosaure, httpOptions)
+  }
+
+  getDinosaures(){
+    return this.http.get<Dinosaure[]>(this.url + "list", httpOptions)
+  }
+
+  addFriend(id: string):Observable<{}>{
+    return this.http.post(this.url + "friends/" + id, httpOptions)
+  }
+
+  deleteFriend(id: string):Observable<{}>{
+    return this.http.delete(this.url + "friends/" + id, httpOptions)
   }
 
 }

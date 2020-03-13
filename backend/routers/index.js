@@ -5,15 +5,15 @@ module.exports = app => {
 
     //(Afficher/Modifier) ses informations (age / famille / race / nourriture) 
     app.get('/api/information',async(req,res) => {
-        //const items = await Dinosaure.find().where('user').equals(req.user).populate('amis')
-        const items = await Dinosaure.findOne({"user": req.user})
+        const items = await Dinosaure.findOne({"user": req.user}).populate('amis')
         res.send(items)
     })
 
     app.put('/api/information',async(req,res) => {
-        console.log(req.body)
-        console.log(req.user)
+        console.log("body ",req.body)
+        console.log("user ",req.user)
         const model = await Dinosaure.findOne({"user": req.user}).update({
+            name: req.body.name,
             age: req.body.age,
             famille: req.body.famille,
             race: req.body.race,
@@ -24,23 +24,24 @@ module.exports = app => {
 
     //(Ajouter/Supprimer) un "Dinosaure" (déjà inscrit) de sa liste d'amis.
     app.get('/api/list/',async(req,res) => {
-        const model = await User.find().select('username')
+        const model = await Dinosaure.find()
         res.send(model)
     })
 
-    app.post('/api/list/:id', async(req,res) => {
-        const ami = await Dinosaure.find().where('user').equals(req.params.id)
-        const model = await Dinosaure.find().where('user').equals(req.user).updateOne({
-            $addToSet: { amis: ami  }
+    app.post('/api/friends/:id', async(req,res) => {
+        const model = await Dinosaure.findOne({"user": req.user}).update({
+            $addToSet: { amis: req.params.id  }
         })
         res.send(model)
     })
-    app.delete('/api/list/:id', async(req,res) => {
-        const model = await Dinosaure.find().where('user').equals(req.user).update({
-            $pull: { amis: {  _id: req.params.id }  }
+    app.delete('/api/friends/:id', async(req,res) => {
+
+        const model = await Dinosaure.findOne({"user": req.user}).update({},{
+            $pull: { amis: req.params.id } 
         })
         res.send(model)
     })
+    
 
 
 }

@@ -32,4 +32,8 @@ export class AuthService {
     return localStorage.getItem('session')
   }
 
+  isLoggedIn(){
+    return localStorage.getItem("session") !== null
+  }
+
 }

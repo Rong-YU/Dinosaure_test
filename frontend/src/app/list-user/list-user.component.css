@@ -3,15 +3,16 @@ h2{
     text-align: center;
 }
 
-.listAmi{
+.listDinosaures{
     width: 400px;
     margin: 50px auto;
     padding: 20px;
     border:1px solid #eee;
 
+    
 }
 
-.listAmi li{
+.listDinosaures li{
     
     height: 50px;
 

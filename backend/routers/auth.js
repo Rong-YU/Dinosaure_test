@@ -23,7 +23,6 @@ module.exports = app => {
           });
           if (user) {
               req.user = user;
-              console.log("next")
               return next();
           }
         }
@@ -70,6 +69,7 @@ module.exports = app => {
       const user = await users.create({username, password:passwordHash,sessionKey:session})
       await Dinosaure.create({
         user: user,
+        name : username,
         age: null,
         famille: null,
         race: null,

@@ -12,13 +12,17 @@ import { InformationComponent } from './information/information.component';
 import { InformationService } from "./services/information.service";
 import { AuthService } from "./services/auth.service";
 import { TokenInterceptorService } from "./services/token-interceptor.service";
-
+import { ListUserComponent } from './list-user/list-user.component';
+import { HeaderComponent } from './header/header.component';
+import { AuthGuard } from './auth.guard'
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ListAmiComponent,
     InformationComponent,
+    ListUserComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,7 +30,7 @@ import { TokenInterceptorService } from "./services/token-interceptor.service";
     HttpClientModule,
     FormsModule,
   ],
-  providers: [AuthService,InformationService,{
+  providers: [AuthService, AuthGuard, InformationService,{
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptorService,
     multi: true
