@@ -31,11 +31,11 @@ export class InformationService {
   }
 
   addFriend(id: string):Observable<{}>{
-    return this.http.post(this.url + "friends/" + id, httpOptions)
+    return this.http.post(this.url + `friends/${id}`, httpOptions)
   }
 
   deleteFriend(id: string):Observable<{}>{
-    return this.http.delete(this.url + "friends/" + id, httpOptions)
+    return this.http.delete(this.url + `friends/${id}`, httpOptions)
   }
 
 }

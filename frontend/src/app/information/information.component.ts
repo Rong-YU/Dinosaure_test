@@ -8,7 +8,6 @@ import { InformationService } from "../services/information.service";
   styleUrls: ['./information.component.css']
 })
 export class InformationComponent implements OnInit {
-
   dinosaure: Dinosaure={
     name:"",
     age:null,
@@ -28,16 +27,14 @@ export class InformationComponent implements OnInit {
     const res = this.information.getInformation()
     res.subscribe((dinosaure : Dinosaure) =>{
         this.dinosaure = dinosaure
-    },(error:any)=>{
-      console.log("error")
     });
   }
 
   setInformation(){
     const res = this.information.setInformation(this.dinosaure)
-    res.subscribe((error:any)=>{
-    console.log(error)
-  });
+    res.subscribe((dinosaure : Dinosaure) =>{
+      this.dinosaure = dinosaure
+    })
   }
 
 }

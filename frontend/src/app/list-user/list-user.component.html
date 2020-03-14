@@ -1,17 +1,19 @@
-<h2>List dinosaures</h2>
+<h2>User list</h2>
 <div class="listDinosaures">
 
     <div *ngFor="let dinosaure of dinosaures">
-        <div class="name" (click)="onSelect(dinosaure)">
-            {{dinosaure.name}}
+        <div class="dinosaure" *ngIf="dinosaure._id">
+            <div class="name" (click)="onSelect(dinosaure)">
+                {{dinosaure.name}}
+            </div>
+            <ul class="detail" [class.selected]="dinosaure === selectedDinosaure">
+                <li><label>Age :</label> {{dinosaure.age}}</li>
+                <li><label>Famille :</label> {{dinosaure.famille}}</li>
+                <li><label>Nourriture :</label> {{dinosaure.nourriture}}</li>
+                <li><label>Race :</label> {{dinosaure.race}}</li>
+                <li><button (click)="addFriend(dinosaure._id)" class="add">Add Friend</button></li>
+            </ul>
         </div>
-        <ul class="detail" [class.selected]="dinosaure === selectedDinosaure">
-            <li>Age: {{dinosaure.age}}</li>
-            <li>Famille: {{dinosaure.famille}}</li>
-            <li>Nourriture: {{dinosaure.nourriture}}</li>
-            <li>Race: {{dinosaure.race}}</li>
-            <li><button (click)="addFriend(dinosaure._id)" class="add">Add Friend</button></li>
-        </ul>
     </div>
 
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Dinosaure } from '../models/Dinosaure';
 import { InformationService } from "../services/information.service";
 
@@ -8,7 +8,7 @@ import { InformationService } from "../services/information.service";
   styleUrls: ['./list-user.component.css']
 })
 export class ListUserComponent implements OnInit {
-  dinosaures:Dinosaure[]
+  dinosaures: Dinosaure[]
   constructor(public information:InformationService) { }
 
   ngOnInit(): void {
@@ -16,11 +16,8 @@ export class ListUserComponent implements OnInit {
   }
 
   getDinosaures(){
-    const res = this.information.getDinosaures()
-    res.subscribe((dinosaures : Dinosaure[]) =>{
+    this.information.getDinosaures().subscribe((dinosaures : Dinosaure[]) =>{
         this.dinosaures = dinosaures
-    },(error:any)=>{
-      console.log("error fetch amis")
     });
   }
 
@@ -32,4 +29,5 @@ export class ListUserComponent implements OnInit {
   onSelect(dinosaure: Dinosaure): void {
     this.selectedDinosaure = dinosaure;
   }
+
 }

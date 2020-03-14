@@ -18,17 +18,19 @@ export class ListAmiComponent implements OnInit {
 
   getInformation(){
     const res = this.information.getInformation()
-    res.subscribe((dinosaure : Dinosaure) =>{
+    res.subscribe((dinosaure : Dinosaure) =>
+    {
         this.dinosaures = dinosaure.amis;
-    },(error:any)=>{
-      console.log("error")
     });
   }
 
   deleteFriend(id:string){
-    console.log(id)
-    this.information.deleteFriend(id).subscribe()
-  }
+    this.information.deleteFriend(id)
+    .subscribe((dinosaure : Dinosaure) =>
+    {
+        this.dinosaures = dinosaure.amis;
+    })
+    }
 
   selectedDinosaure: Dinosaure
   onSelect(dinosaure: Dinosaure): void {

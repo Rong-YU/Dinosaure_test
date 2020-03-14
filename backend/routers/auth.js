@@ -54,7 +54,6 @@ module.exports = app => {
   
   
   app.post("/api/register", async (req, res) => {
-      console.log("sss", req.body)
     if (req.body.username && req.body.password) {
       let username = req.body.username.toString();
       let passwordHash = crypto
