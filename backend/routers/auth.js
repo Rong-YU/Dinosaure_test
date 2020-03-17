@@ -17,7 +17,11 @@ module.exports = app => {
         }
 
         if (req.headers.authorization) {
-          let sessionKey = req.headers.authorization
+          //let sessionKey = req.headers.authorization
+          let sessionKey = crypto
+            .createHash("sha512")
+            .update(req.headers.authorization)
+            .digest("hex");
           user = await users.findOne({
               sessionKey
           });
@@ -44,7 +48,11 @@ module.exports = app => {
           .createHash("sha512")
           .update(seed)
           .digest("hex");
-        await users.findOneAndUpdate({username},{sessionKey:session})
+        let sessionKey = crypto
+          .createHash("sha512")
+          .update(session)
+          .digest("hex");
+        await users.findOneAndUpdate({username},{sessionKey:sessionKey})
         return res.status(201).json({username:username,session:session});
       }
       return res.sendStatus(403);
@@ -54,6 +62,11 @@ module.exports = app => {
   
   
   app.post("/api/register", async (req, res) => {
+    let username = req.body.username
+    let user = await users.findOne({username})
+    if(user){
+      return res.status(400)
+    }
     if (req.body.username && req.body.password) {
       let username = req.body.username.toString();
       let passwordHash = crypto
@@ -65,7 +78,11 @@ module.exports = app => {
           .createHash("sha512")
           .update(seed)
           .digest("hex");
-      const user = await users.create({username, password:passwordHash,sessionKey:session})
+      let sessionKey = crypto
+        .createHash("sha512")
+        .update(session)
+        .digest("hex");
+      const user = await users.create({username, password:passwordHash,sessionKey:sessionKey})
       await Dinosaure.create({
         user: user,
         name : username,

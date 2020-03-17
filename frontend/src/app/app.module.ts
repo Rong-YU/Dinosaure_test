@@ -14,7 +14,8 @@ import { AuthService } from "./services/auth.service";
 import { TokenInterceptorService } from "./services/token-interceptor.service";
 import { ListUserComponent } from './list-user/list-user.component';
 import { HeaderComponent } from './header/header.component';
-import { AuthGuard } from './auth.guard'
+import { AuthGuard } from './auth.guard';
+import { AddAmiComponent } from './add-ami/add-ami.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,6 +24,7 @@ import { AuthGuard } from './auth.guard'
     InformationComponent,
     ListUserComponent,
     HeaderComponent,
+    AddAmiComponent,
   ],
   imports: [
     BrowserModule,

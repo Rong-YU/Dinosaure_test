@@ -1,0 +1,14 @@
+<h2>Ajouter un ami</h2>
+<div class="information">
+    <ul>
+        <li><label>Username :</label> <input type="text" [(ngModel)]="user.username"></li>
+        <li><label>Password :</label> <input type="password" [(ngModel)]="user.password"></li>
+        <li><label>Name :</label> <input type="text" [(ngModel)]="dinosaure.name"></li>
+        <li><label>Age :</label> <input type="text" [(ngModel)]="dinosaure.age"></li>
+        <li><label>Race :</label> <input type="text" [(ngModel)]="dinosaure.race"></li>
+        <li><label>Famille :</label> <input type="text" [(ngModel)]="dinosaure.famille"></li>
+        <li><label>Nourriture :</label> <input type="text" [(ngModel)]="dinosaure.nourriture"></li>
+    </ul>
+    <button (click)="addAmi()">Save</button>
+</div>
+

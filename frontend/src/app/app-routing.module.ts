@@ -4,6 +4,7 @@ import { InformationComponent } from './information/information.component'
 import { ListAmiComponent } from './list-ami/list-ami.component'
 import { ListUserComponent } from './list-user/list-user.component'
 import { LoginComponent } from './login/login.component'
+import { AddAmiComponent } from './add-ami/add-ami.component'
 import { AuthGuard } from './auth.guard';
 const routes: Routes = [
   { 
@@ -25,6 +26,11 @@ const routes: Routes = [
     component: ListAmiComponent,
     canActivate: [AuthGuard],
   },
+  {
+    path: 'addAmi',
+    component: AddAmiComponent,
+    canActivate: [AuthGuard],
+  }
 ];
 
 @NgModule({

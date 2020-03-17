@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { AuthService } from "./auth.service";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../models/User';
 import { Observable } from 'rxjs';
@@ -36,6 +35,19 @@ export class InformationService {
 
   deleteFriend(id: string):Observable<{}>{
     return this.http.delete(this.url + `friends/${id}`, httpOptions)
+  }
+
+  addNewFriend(user: User, dinosaure: Dinosaure):Observable<any>{
+    let ami = {
+      username: user.username,
+      password: user.password,
+      name: dinosaure.name,
+      age: dinosaure.age,
+      famille: dinosaure.famille,
+      race: dinosaure.race,
+      nourriture: dinosaure.nourriture
+    }
+    return this.http.post<any>(this.url + "addAmi", ami, httpOptions)
   }
 
 }

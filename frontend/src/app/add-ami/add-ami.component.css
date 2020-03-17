@@ -1,0 +1,53 @@
+h2{
+    margin: 50px auto;
+    text-align: center;
+}
+
+.information{
+    width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border:1px solid #eee;
+    
+
+    
+}
+
+.information li{
+    
+    height: 50px;
+
+}
+
+li{
+    padding-left:10px;
+    padding-bottom: 0px;
+    font-size:16px;
+    margin: 20px;
+    display:inline-block;
+    width: 100%;
+}
+
+input {
+  padding: 12px 20px;
+  margin: 8px;
+  box-sizing: border-box;
+  display:block;
+  width: 80%;
+  font-size:15px;
+  }
+
+
+label{
+    display: block;
+}
+
+button {
+    background-color: rgb(34, 34, 41);
+    color: white;
+    margin-top: 25px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }

@@ -38,9 +38,9 @@ export class LoginComponent implements OnInit {
   register(){
     const res = this.auth.register(this.user)
     res.subscribe((user : User) =>{
-        localStorage.setItem('username',user.username);
-        localStorage.setItem('session',user.session);
-        this.router.navigate(['']);
+        //localStorage.setItem('username',user.username);
+        //localStorage.setItem('session',user.session);
+        //this.router.navigate(['']);
     },(error:any)=>{
       localStorage.removeItem('session');
     });
