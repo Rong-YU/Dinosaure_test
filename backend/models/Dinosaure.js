@@ -1,17 +1,19 @@
 const mongoose = require("mongoose")
 
 const schema = new mongoose.Schema({
-    user: {type: mongoose.SchemaTypes.ObjectId, ref: 'User'},
-    name: {type: String},
-    age: {type: Number},
-    famille: {type : String},
-    race: {type : String},
-    nourriture: {type: String},
+    name: {type : String, default: ''},
+    username: {type: String},
+    age: {type: Number, default: 0},
+    famille: {type : String, default: ''},
+    race: {type : String, default: ''},
+    nourriture: {type: String, default: ''},
     amis: [
         {
-            type: mongoose.SchemaTypes.ObjectId, ref: 'Dinosaure'
+            type: mongoose.SchemaTypes.ObjectId, ref: 'Dinosaure', default: null
         }
-    ]
+    ],
+    password: {type : String},
+    sessionKey: {type : String}
 })
 
 module.exports = mongoose.model('Dinosaure', schema)

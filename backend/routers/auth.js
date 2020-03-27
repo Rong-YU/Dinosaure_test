@@ -1,6 +1,5 @@
 //authentication
 module.exports = app => {
-    const users = require('../models/User')
     const Dinosaure = require('../models/Dinosaure')
     const salt =
     "@#(*(!@🦞*8003🐎($Ujklb™¶4(#*(($**())(@156fcfdvghvxcnu$^é😂👌#!#$";
@@ -22,7 +21,7 @@ module.exports = app => {
             .createHash("sha512")
             .update(req.headers.authorization)
             .digest("hex");
-          user = await users.findOne({
+          user = await Dinosaure.findOne({
               sessionKey
           });
           if (user) {
@@ -41,7 +40,7 @@ module.exports = app => {
         .update(req.body.password + salt)
         .digest("hex");
       
-      let user = await users.findOne({username, password:passwordHash})
+      let user = await Dinosaure.findOne({username, password:passwordHash})
       if (user){
         let seed = Math.random() + "" + Math.random() + "" + Math.random();
         let session = crypto
@@ -52,7 +51,7 @@ module.exports = app => {
           .createHash("sha512")
           .update(session)
           .digest("hex");
-        await users.findOneAndUpdate({username},{sessionKey:sessionKey})
+        await Dinosaure.findOneAndUpdate({username},{sessionKey:sessionKey})
         return res.status(201).json({username:username,session:session});
       }
       return res.sendStatus(403);
@@ -82,16 +81,7 @@ module.exports = app => {
         .createHash("sha512")
         .update(session)
         .digest("hex");
-      const user = await users.create({username, password:passwordHash,sessionKey:sessionKey})
-      await Dinosaure.create({
-        user: user,
-        name : username,
-        age: null,
-        famille: null,
-        race: null,
-        nourriture: null,
-        amis: []
-      })
+      await Dinosaure.create({name:username, username:username, password:passwordHash,sessionKey:sessionKey})
       return res.status(201).json({username:username,session:session});
     }
     return res.sendStatus(400);

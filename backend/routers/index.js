@@ -1,26 +1,25 @@
 module.exports = app => {
     const express = require('express')
     const Dinosaure = require('../models/Dinosaure')
-    const users = require('../models/User')
     const salt =
     "@#(*(!@🦞*8003🐎($Ujklb™¶4(#*(($**())(@156fcfdvghvxcnu$^é😂👌#!#$";
     const crypto = require("crypto");
 
     //(Afficher/Modifier) ses informations (age / famille / race / nourriture) 
     app.get('/api/information',async(req,res) => {
-        const items = await Dinosaure.findOne({"user": req.user}).populate('amis')
+        const items = await Dinosaure.findOne({username : req.user.username}).populate('amis')
         res.send(items)
     })
 
     app.put('/api/information',async(req,res) => {
-        await Dinosaure.findOne({"user": req.user}).update({
+        await req.user.update({
             name: req.body.name,
             age: req.body.age,
             famille: req.body.famille,
             race: req.body.race,
             nourriture: req.body.nourriture,
         })
-        const items = await Dinosaure.findOne({"user": req.user}).populate('amis')
+        const items = req.user.populate('amis')
         res.send(items)
     })
 
@@ -28,7 +27,7 @@ module.exports = app => {
     app.post('/api/addAmi/',async(req,res) => {
         if (req.body.username && req.body.password) {
             let username = req.body.username.toString();
-            let user = await users.findOne({username})
+            let user = await Dinosaure.findOne({username})
             if(user){
                 return res.status(400)
             }
@@ -45,17 +44,18 @@ module.exports = app => {
               .createHash("sha512")
               .update(session)
               .digest("hex");
-            user = await users.create({username, password:passwordHash,sessionKey:sessionKey})
             const ami = await Dinosaure.create({
-              user: user,
-              name : username,
+              username: username,
+              password: passwordHash,
+              sessionKey: sessionKey,
+              name : req.body.name,
               age: req.body.age,
               famille: req.body.famille,
               race: req.body.race,
               nourriture: req.body.nourriture,
-              amis: []
+              amis: [ req.user ]
             })
-            await Dinosaure.findOne({"user": req.user}).update({
+            await req.user.update({
                 $addToSet: { amis: ami  }
             })
             return res.sendStatus(200)
@@ -65,27 +65,24 @@ module.exports = app => {
 
     //(Ajouter/Supprimer) un "Dinosaure" (déjà inscrit) de sa liste d'amis.
     app.get('/api/list/',async(req,res) => {
-        const items = await Dinosaure.find({"user":{$ne:req.user}})
+        const items = await Dinosaure.find({username:{$ne:req.user.username}})
         res.send(items)
     })
 
     app.post('/api/friends/:id', async(req,res) => {
-        await Dinosaure.findOne({"user": req.user}).update({
+        await req.user.update({
             $addToSet: { amis: req.params.id  }
         })
-        const items = await Dinosaure.findOne({"user": req.user}).populate('amis')
+        const items = req.user.populate('amis')
         res.send(items)
     })
     app.delete('/api/friends/:id', async(req,res) => {
-
-        await Dinosaure.findOne({"user": req.user}).update({},{
+        await Dinosaure.findOne({username : req.user.username}).update({},{
             $pull: { amis: req.params.id } 
         })
-        const items = await Dinosaure.findOne({"user": req.user}).populate('amis')
+        const items = req.user.populate('amis')
         res.send(items)
     })
-    
-
 
 }
 
